@@ -1,7 +1,179 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .tab-container {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .tabs {
+            display: flex;
+            background: #333;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            margin-right: 5px;
+            border: none;
+            background: #555;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .tab-button.active {
+            background: #fff;
+            color: #333;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 70px 20px 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 视频背景样式 */
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        .content-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        /* 表单样式 */
+        .feedback-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <div class="tab-container">
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'tab1')">首页</button>
+            <button class="tab-button" onclick="openTab(event, 'tab2')">关于我们</button>
+            <button class="tab-button" onclick="openTab(event, 'tab3')">反馈</button>
+        </div>
+
+        <div id="tab1" class="tab-content active">
+            <video autoplay muted loop id="video-background">
+                <source src="your-video.mp4" type="video/mp4">
+            </video>
+            <div class="content-overlay">
+                <h1>欢迎来到我们的网站</h1>
+                <p>这是一个令人印象深刻的首页，配有沉浸式视频背景。</p>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <div class="content-overlay">
+                <h2>关于我们</h2>
+                <p>我们是一个充满激情的团队，致力于为用户提供最好的体验。</p>
+                <p>我们的使命是创造价值，推动创新。</p>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <div class="feedback-form">
+                <h2>发送反馈</h2>
+                <form onsubmit="return handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">姓名：</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱：</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">消息：</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            let tabcontents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].className = tabcontents[i].className.replace(" active", "");
+            }
+
+            let tablinks = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).className += " active";
+            evt.currentTarget.className += " active";
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('感谢您的反馈！');
+            event.target.reset();
+            return false;
+        }
+    </script>
 </body>
 </html>
